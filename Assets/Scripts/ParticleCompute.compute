@@ -1,0 +1,36 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+static const int threadGroupSize = 1024;
+static const float gConstant = 6.67e-11f;
+struct Particle {
+    float3 position;
+    float1 mass;
+    float3 velocity;
+    float3 acceleration;
+};
+
+RWStructuredBuffer<Particle> particles;
+int1 numParticles;
+float1 timeStep;
+
+[numthreads(threadGroupSize,1,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    for (int i = 0; i < numParticles; i++) {
+        if (id.x != i) {
+            float3 offset = particles[i].position - particles[id.x].position;
+            float sqrDst = offset.x * offset.x + offset.y * offset.y + offset.z * offset.z;
+
+            // calculate force acting on particle
+            if (sqrDst > 0.0025f) {
+                float3 a = normalize(offset) * gConstant * particles[i].mass / sqrDst;
+                particles[id.x].acceleration += a * timeStep;
+            }
+        }
+    }
+    // apply acceleration to velocity
+    particles[id.x].velocity += particles[id.x].acceleration * timeStep;
+
+    // calculate position of particle
+    particles[id.x].position += particles[id.x].velocity * timeStep;
+}
