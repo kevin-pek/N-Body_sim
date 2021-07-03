@@ -18,15 +18,16 @@ public class Particle : MonoBehaviour
 
         if (settings.spawnType == ParticleSettings.SpawnType.RandomSphere) {
             transform.position = Random.insideUnitSphere * settings.spawnRad;
-            Vector3 offset = -transform.position.normalized;
-            transform.LookAt(Vector3.zero);
-            Quaternion rotation = Quaternion.LookRotation(offset, transform.right);
-            velocity = rotation * settings.initialVelocity;
+            //Vector3 offset = -transform.position.normalized;
+            //transform.LookAt(Vector3.zero);
+            //Quaternion rotation = Quaternion.LookRotation(offset, transform.right);
+            transform.rotation = Random.rotation;
+            velocity = transform.forward * Random.Range(0, settings.maxInitialSpeed);
         }
         else if (settings.spawnType == ParticleSettings.SpawnType.PointBurst) {
-            transform.position = settings.initialPosition;
+            transform.position = Vector3.zero;
             transform.rotation = Random.rotation;
-            velocity = transform.forward * Random.Range(0, settings.initialVelocity.magnitude);
+            velocity = transform.forward * Random.Range(0, settings.maxInitialSpeed);
         }
     }
 

@@ -1,7 +1,7 @@
 // Each #kernel tells which function to compile; you can have many kernels
 #pragma kernel CSMain
 static const int threadGroupSize = 1024;
-static const float gConstant = 6.67e-11f;
+static const float gConstant = 6.67e-10f;
 struct Particle {
     float3 position;
     float1 mass;

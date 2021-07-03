@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2fde87e74577c14bb01cd070db30919, type: 3}
   m_Name: Debug
   m_EditorClassIdentifier: 
-  particleMass: 10000
+  particleMass: 1000000
   randomMassFac: 0.5
   particleRenderSize: 1
-  initialVelocity: {x: 0, y: 0.01, z: 0}
-  initialPosition: {x: 0, y: 0, z: 0}
-  timeScale: 10
+  maxInitialSpeed: 0.1
+  timeScale: 100
   spawnType: 1
-  spawnRad: 10
+  spawnRad: 150
   spawnCount: 3000
+  showTrails: 0
